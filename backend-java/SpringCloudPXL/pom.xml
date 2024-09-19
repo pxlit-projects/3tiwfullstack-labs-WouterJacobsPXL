@@ -23,6 +23,7 @@
 	</developers>
     <modules>
         <module>EmployeeService</module>
+        <module>DepartmentService</module>
     </modules>
     <scm>
 		<connection/>
