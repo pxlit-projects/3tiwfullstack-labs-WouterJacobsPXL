@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql-db-employees:
+    image: mysql:8.0
+    container_name: mysql-db-employees
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employeeservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data-1:/var/lib/mysql
+
+  mysql-db-departments:
+    image: mysql:8.0
+    container_name: mysql-db-departments
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: departmentservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data-2:/var/lib/mysql
+
+  mysql-db-organization:
+    image: mysql:8.0
+    container_name: mysql-db-organization
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: organizationservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data-3:/var/lib/mysql
+
+volumes:
+  mysql-data-1:
+  mysql-data-2:
+  mysql-data-3:
+
