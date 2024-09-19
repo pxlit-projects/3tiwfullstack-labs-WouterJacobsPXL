@@ -11,7 +11,8 @@
 	<groupId>be.pxl.services</groupId>
 	<artifactId>SpringCloudPXL</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringCloudPXL</name>
+    <packaging>pom</packaging>
+    <name>SpringCloudPXL</name>
 	<description>SpringCloudPXL</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,10 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>EmployeeService</module>
+    </modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
