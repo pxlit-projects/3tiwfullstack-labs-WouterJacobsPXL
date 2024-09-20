@@ -1,6 +1,5 @@
 package be.pxl.services.controller;
 
-import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.service.IEmployeeService;
@@ -15,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/employee")
 public class EmployeeController {
-    //TODO get and return dto's instead of raw class.
     private final IEmployeeService employeeService;
 
     @PostMapping
@@ -42,8 +40,21 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
     }
 
-    /*ENDPOINT EMPLOYEE:
-    @GetMapping("/department/{departmentId}") findByDepartment
-    @GetMapping("/organization/{organizationId}") findByOrganization*/
+    @GetMapping("/department/{departmentId}")
+    public ResponseEntity<?> getEmployeeByDepartment(@PathVariable Long departmentId){
+        try {
+            return new ResponseEntity<>(employeeService.getEmployeeByDepartment(departmentId), HttpStatus.OK);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @GetMapping("/organization/{organizationId}")
+    public ResponseEntity<?> getEmployeeByOriganization(@PathVariable Long organizationId){
+        try {
+            return new ResponseEntity<>(employeeService.getEmployeeByOrganization(organizationId), HttpStatus.OK);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
