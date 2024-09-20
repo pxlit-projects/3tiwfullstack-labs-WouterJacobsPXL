@@ -1,6 +1,8 @@
 package be.pxl.services.controller;
 
 import be.pxl.services.domain.Employee;
+import be.pxl.services.domain.dto.EmployeeRequest;
+import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.service.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,9 @@ public class EmployeeController {
     private final IEmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee){
+    public ResponseEntity<?> addEmployee(@RequestBody EmployeeRequest employeeRequest){
         try {
-            employeeService.addEmployee(employee);
+            employeeService.addEmployee(employeeRequest);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (IllegalArgumentException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -36,17 +38,11 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Employee>> getEmployees(){
+    public ResponseEntity<List<EmployeeResponse>> getEmployees(){
         return new ResponseEntity<>(employeeService.getAllEmployees(), HttpStatus.OK);
     }
 
-
-
-
     /*ENDPOINT EMPLOYEE:
-    @PostMapping add
-    @GetMapping("/{id}") findById
-    @GetMapping findAll
     @GetMapping("/department/{departmentId}") findByDepartment
     @GetMapping("/organization/{organizationId}") findByOrganization*/
 
