@@ -7,4 +7,6 @@ import java.util.List;
 public interface IEmployeeService {
 
     List<Employee> getAllEmployees();
+
+    Employee getEmployeeById(Long id);
 }

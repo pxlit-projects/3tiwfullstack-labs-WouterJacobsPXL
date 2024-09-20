@@ -12,7 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeService implements IEmployeeService{
     private final EmployeeRepository employeeRepository;
-    @Override
+    //add
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("No employee found with id: " + id));
+    }
+
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
