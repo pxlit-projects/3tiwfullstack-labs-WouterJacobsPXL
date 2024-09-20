@@ -5,10 +5,7 @@ import be.pxl.services.service.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,10 +13,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/employee")
 public class EmployeeController {
+    //TODO get and return dto's instead of raw class.
     private final IEmployeeService employeeService;
 
+    @PostMapping
+    public ResponseEntity<?> addEmployee(@RequestBody Employee employee){
+        try {
+            employeeService.addEmployee(employee);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    //@PostMapping
     @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
         try {

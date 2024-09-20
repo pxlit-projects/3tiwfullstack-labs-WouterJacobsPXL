@@ -9,4 +9,6 @@ public interface IEmployeeService {
     List<Employee> getAllEmployees();
 
     Employee getEmployeeById(Long id);
+
+    void addEmployee(Employee employee);
 }
