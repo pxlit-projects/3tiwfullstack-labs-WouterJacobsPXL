@@ -22,7 +22,9 @@ public class DepartmentService implements IDepartmentService {
     }
 
     public DepartmentResponse getDepartmentById(Long id) {
-        return departmentRepository.findById(id).map(this::mapToDepartmentResponse).orElse(null);
+        return departmentRepository.findById(id).map(this::mapToDepartmentResponse)
+                .orElseThrow(() -> new NullPointerException("No department found with id: " + id));
+
     }
 
     public List<DepartmentResponse> getDepartments() {
