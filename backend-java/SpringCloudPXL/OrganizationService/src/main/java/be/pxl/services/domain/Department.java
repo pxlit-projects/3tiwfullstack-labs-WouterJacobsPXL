@@ -1,10 +1,6 @@
-package be.pxl.services.domain.dto;
+package be.pxl.services.domain;
 
-import be.pxl.services.domain.Employee;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +8,16 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentRequest {
+public class Department {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long organizationId;
     private String name;
+
     @Transient
     private List<Employee> employees;
     private String position;
