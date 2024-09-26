@@ -1,8 +1,6 @@
 package be.pxl.services.service;
 
-import be.pxl.services.domain.Department;
 import be.pxl.services.domain.Organization;
-import be.pxl.services.domain.dto.DepartmentResponse;
 import be.pxl.services.domain.dto.OrganizationResponse;
 import be.pxl.services.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
