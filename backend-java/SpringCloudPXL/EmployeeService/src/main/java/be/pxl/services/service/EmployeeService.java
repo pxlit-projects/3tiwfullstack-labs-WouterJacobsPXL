@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,14 +16,27 @@ public class EmployeeService implements IEmployeeService{
     private final EmployeeRepository employeeRepository;
 
     public void addEmployee(EmployeeRequest employeeRequest) {
-        Employee employee = Employee.builder().age(employeeRequest.getAge())
-                                                .name(employeeRequest.getName())
-                                                .position(employeeRequest.getPosition())
-                                                .departmentId(employeeRequest.getDepartmentId())
-                                                .organizationId(employeeRequest.getOrganizationId())
-                                                .build();
+        // Validation: throw IllegalArgumentException for invalid input
+        if (employeeRequest.getAge() <= 0 || employeeRequest.getAge() > 100) {
+            throw new IllegalArgumentException("Invalid employee data");
+        }
+        if (employeeRequest.getName() == null || employeeRequest.getName().isEmpty()) {
+            throw new IllegalArgumentException("Invalid employee data");
+        }
+        if (employeeRequest.getPosition() == null || employeeRequest.getPosition().isEmpty()) {
+            throw new IllegalArgumentException("Invalid employee data");
+        }
+
+        Employee employee = Employee.builder()
+                .age(employeeRequest.getAge())
+                .name(employeeRequest.getName())
+                .position(employeeRequest.getPosition())
+                .departmentId(employeeRequest.getDepartmentId())
+                .organizationId(employeeRequest.getOrganizationId())
+                .build();
         employeeRepository.save(employee);
     }
+
 
     public EmployeeResponse getEmployeeById(Long id) {
         return employeeRepository.findById(id).map(this::mapToEmployeeResponse)
@@ -30,8 +44,14 @@ public class EmployeeService implements IEmployeeService{
     }
 
     public List<EmployeeResponse> getAllEmployees() {
-        return employeeRepository.findAll().stream().map(this::mapToEmployeeResponse).toList();
+        return Optional.of(employeeRepository.findAll()
+                        .stream()
+                        .map(this::mapToEmployeeResponse)
+                        .toList())
+                .filter(list -> !list.isEmpty())
+                .orElseThrow(() -> new RuntimeException("No employees found"));
     }
+
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder().age(employee.getAge())
@@ -42,22 +62,22 @@ public class EmployeeService implements IEmployeeService{
                 .build();
     }
 
-    public List<EmployeeResponse> getEmployeeByDepartment(Long departmentId) {
+    public List<EmployeeResponse> getEmployeesByDepartment(Long departmentId) {
         List<EmployeeResponse> employeeResponseList =  employeeRepository.findAll().stream().
                 filter(employee -> employee.getDepartmentId().equals(departmentId))
                 .toList().stream().map(this::mapToEmployeeResponse).toList();
         if (employeeResponseList.isEmpty()){
-            throw new IllegalArgumentException("No employee found with department id: " + departmentId);
+            throw new IllegalArgumentException("No employees found with department id: " + departmentId);
         }
         return employeeResponseList;
     }
 
-    public List<EmployeeResponse> getEmployeeByOrganization(Long organizationId) {
+    public List<EmployeeResponse> getEmployeesByOrganization(Long organizationId) {
         List<EmployeeResponse> employeeResponseList =  employeeRepository.findAll().stream().
                 filter(employee -> employee.getOrganizationId().equals(organizationId))
                 .toList().stream().map(this::mapToEmployeeResponse).toList();
         if (employeeResponseList.isEmpty()){
-            throw new IllegalArgumentException("No employee found with organization id: " + organizationId);
+            throw new IllegalArgumentException("No employees found with organization id: " + organizationId);
         }
         return employeeResponseList;
     }
