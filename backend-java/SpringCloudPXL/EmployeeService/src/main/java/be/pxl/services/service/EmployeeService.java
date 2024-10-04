@@ -1,8 +1,10 @@
 package be.pxl.services.service;
 
+import be.pxl.services.client.NotificationClient;
 import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.dto.EmployeeRequest;
 import be.pxl.services.domain.dto.EmployeeResponse;
+import be.pxl.services.domain.dto.NotificationRequest;
 import be.pxl.services.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EmployeeService implements IEmployeeService{
     private final EmployeeRepository employeeRepository;
-
+    private final NotificationClient notificationClient;
     public void addEmployee(EmployeeRequest employeeRequest) {
         // Validation: throw IllegalArgumentException for invalid input
         if (employeeRequest.getAge() <= 0 || employeeRequest.getAge() > 100) {
@@ -35,6 +37,9 @@ public class EmployeeService implements IEmployeeService{
                 .organizationId(employeeRequest.getOrganizationId())
                 .build();
         employeeRepository.save(employee);
+
+        notificationClient.sendNotification(new NotificationRequest("employee %s created".formatted(employee.getName()),
+                "Admin"));
     }
 
 
