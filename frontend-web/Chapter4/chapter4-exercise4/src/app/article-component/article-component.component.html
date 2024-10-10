@@ -1,0 +1,24 @@
+<table onclick="showAlert()">
+  <thead>
+  <tr>
+    <th>Artikel Nummer</th>
+    <th>Artikel Naam</th>
+    <th>Foto</th>
+    <th>Aankoop Prijs</th>
+    <th>Verkoop Prijs</th>
+    <th>Info</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for(article of articles; track article.artikelNaam){
+      <tr >
+        <td>{{article.artikelNummer}}</td>
+        <td (click)="showAlert(article)">{{article.artikelNaam}}</td>
+        <td><img [src]="article.image" alt="foto"></td>
+        <td>{{article.aankoopPrijs | currency:'EUR'}}</td>
+        <td>{{article.verkoopPrijs | currency:'EUR'}}</td>
+        <td><a href="https://www.google.be/search?q={{article.artikelNaam}}">info</a></td>
+      </tr>
+    }
+  </tbody>
+</table>
