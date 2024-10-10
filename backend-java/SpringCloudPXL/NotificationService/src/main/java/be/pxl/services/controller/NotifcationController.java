@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/notification")
+@RequestMapping("/api/notification")
 public class NotifcationController {
     @Autowired
     private NotificationService notificationService;

@@ -59,13 +59,16 @@ public class EmployeeService implements IEmployeeService{
 
 
     private EmployeeResponse mapToEmployeeResponse(Employee employee) {
-        return EmployeeResponse.builder().age(employee.getAge())
-                .name(employee.getName())
-                .position(employee.getPosition())
-                .departmentId(employee.getDepartmentId())
-                .organizationId(employee.getOrganizationId())
+        return EmployeeResponse.builder()
+                .organizationId(employee.getOrganizationId() != null ? employee.getOrganizationId() : 0L)
+                .departmentId(employee.getDepartmentId() != null ? employee.getDepartmentId() : 0L)
+                .name(employee.getName() != null ? employee.getName() : "Unknown")
+                .age(employee.getAge() != 0 ? employee.getAge() : 0)
+                .position(employee.getPosition() != null ? employee.getPosition() : "Unknown")
                 .build();
     }
+
+
 
     public List<EmployeeResponse> getEmployeesByDepartment(Long departmentId) {
         List<EmployeeResponse> employeeResponseList =  employeeRepository.findAll().stream().

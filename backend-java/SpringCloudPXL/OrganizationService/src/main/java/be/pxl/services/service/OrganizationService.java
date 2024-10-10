@@ -1,15 +1,21 @@
 package be.pxl.services.service;
 
+import be.pxl.services.client.EmployeeClient;
+import be.pxl.services.domain.Employee;
 import be.pxl.services.domain.Organization;
+import be.pxl.services.domain.dto.EmployeeResponse;
 import be.pxl.services.domain.dto.OrganizationResponse;
 import be.pxl.services.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrganizationService implements IOrganizationService{
     private final OrganizationRepository organizationRepository;
+    private final EmployeeClient employeeClient;
 
     public OrganizationResponse getOrganizationById(Long id) {
         return organizationRepository.findById(id).map(this::mapToOrganizationResponse)
@@ -42,9 +48,20 @@ public class OrganizationService implements IOrganizationService{
         return mapToOrganizationResponse(organization);    }
 
     private OrganizationResponse mapToOrganizationResponse(Organization organization) {
+        List<Employee> employees = employeeClient.getAllEmployees().stream().map(this::mapToEmployee).toList();
+
         return OrganizationResponse.builder().name(organization.getName())
                 .address(organization.getAddress())
-                .employees(null)                //TODO fill with real employees
+                .employees(employees)                //TODO fill with real employees !maybe!
                 .departments(null).build();     //TODO fill with real departments
+    }
+
+    private Employee mapToEmployee(EmployeeResponse employeeResponse) {
+        return Employee.builder().age(employeeResponse.getAge())
+                .name(employeeResponse.getName())
+                .position(employeeResponse.getPosition())
+                .departmentId(employeeResponse.getDepartmentId())
+                .organizationId(employeeResponse.getOrganizationId())
+                .build();
     }
 }
