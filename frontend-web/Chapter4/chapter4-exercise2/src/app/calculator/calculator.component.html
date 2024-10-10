@@ -1,0 +1,14 @@
+<div class="calculator-container">
+  <div class="input-container">
+    <input [(ngModel)]="number1" name="number1" placeholder="number 1"/>
+    <input [(ngModel)]="number2" name="number2" placeholder="number 2"/>
+  </div>
+  <button (click)="calculate()">Calculate</button>
+  @if(clicked){
+    <div class="result-container">
+      <p class="result">{{result}}</p>
+    </div>
+  }
+</div>
+
+
