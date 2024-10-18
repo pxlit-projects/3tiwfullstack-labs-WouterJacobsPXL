@@ -7,10 +7,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>DiscoveryService</artifactId>
+    <artifactId>ConfigService</artifactId>
     <packaging>jar</packaging>
 
-    <name>DiscoveryService</name>
+    <name>ConfigService</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -20,12 +20,10 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
+
+
     </dependencies>
 
     <build>
