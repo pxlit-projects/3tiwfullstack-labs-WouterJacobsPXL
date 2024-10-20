@@ -1,0 +1,56 @@
+<div class="container mx-auto mt-5">
+  <h2 class="text-xl mb-3">Add Customer</h2>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+    @if (contactForm.get('name')?.touched && contactForm.get('name')?.hasError('required')) {
+      <div class="text-red-500 text-sm mt-1">Name is required</div>
+    }
+    <div class="mb-4">
+      <label for="name" >Name:</label>
+      <input type="text" id="name" formControlName="name">
+    </div>
+
+    @if (contactForm.get('email')?.touched && contactForm.get('email')?.hasError('required')) {
+      <div>Email is required</div>
+    }
+    @if(contactForm.get('email')?.touched && contactForm.get('email')?.hasError('email')){
+      <div>This is not a valid email address</div>
+    }
+    <div class="mb-4">
+      <label for="email" >Email:</label>
+      <input type="email" id="email" formControlName="email" >
+    </div>
+
+    @if (contactForm.get('phoneNumber')?.touched && contactForm.get('phoneNumber')?.hasError('required')) {
+      <div>Phone number is required</div>
+    }
+    @if(contactForm.get('phoneNumber')?.touched &&
+    (contactForm.get('phoneNumber')?.hasError('minlength ') || contactForm.get('phoneNumber')?.hasError('maxlength'))){
+      <div>This is not a valid phone number of 10 digits</div>
+    }
+    <div class="mb-4">
+      <label for="phoneNumber" >Phone Number:</label>
+      <input type="text" id="phoneNumber" formControlName="phoneNumber">
+    </div>
+
+    @if (contactForm.get('message')?.touched && contactForm.get('message')?.hasError('required')) {
+      <div>Message is required</div>
+    }
+    @if(contactForm.get('message')?.touched && contactForm.get('message')?.hasError('minLenght')){
+      <div>The message has to be longer than 10 characters</div>
+    }
+    <div class="mb-4">
+      <label for="message" >Message:</label>
+      <textarea id="message" name="message" rows="5" cols="40" placeholder="Enter your message here..." formControlName="message"></textarea>
+    </div>
+    <button type="submit" >
+      Send message
+    </button>
+  </form>
+</div>
+@if(messageSend){
+  <div>
+    <h3>SUCCES!</h3>
+  </div>
+}
+
