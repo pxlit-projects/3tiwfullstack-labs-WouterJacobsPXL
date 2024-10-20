@@ -1,0 +1,26 @@
+<form #userRegistrationForm="ngForm" (ngSubmit)="onSubmit(userRegistrationForm)" ngNativeValidate class="user-registration-form">
+  <div class="form-group">
+    <label for="name">User:</label>
+    <input type="text" name="name" required [(ngModel)]="model.name" id="name">
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" name="email" required [(ngModel)]="model.email" #email="ngModel" id="email"
+           pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'>
+    @if(email.invalid && email.dirty){
+      <p>Please enter a valid email address.</p>
+    }
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" name="password" required [(ngModel)]="model.password" id="password">
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" name="confirmPassword" required [(ngModel)]="confirmedPassword" id="confirmPassword">
+    @if(incorrectPasswordGiven){
+      <p>The passwords need to be the same!</p>
+    }
+  </div>
+  <button type="submit" class="submit-button">Submit</button>
+</form>
