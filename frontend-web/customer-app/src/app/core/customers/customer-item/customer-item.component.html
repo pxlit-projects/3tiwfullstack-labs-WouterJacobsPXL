@@ -5,7 +5,7 @@
     <p class="text-gray-700 text-base">
       {{customer.city + "(" + customer.country + ")"}}
     </p>
-    <button (click)="getDetails()" class="bg-green-500 hover:bg-green-700 text-white float-right font-bold mt-4 mb-4 py-2 px-2 rounded">
+    <button [routerLink]="['/customer',customer.id]" routerLinkActive="router-link-active"  class="bg-green-500 hover:bg-green-700 text-white float-right font-bold mt-4 mb-4 py-2 px-2 rounded">
       Details
     </button>
   </div>

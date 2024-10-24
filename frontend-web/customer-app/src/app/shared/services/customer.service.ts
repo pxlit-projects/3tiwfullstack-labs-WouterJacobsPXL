@@ -39,5 +39,12 @@ export class CustomerService {
     return matchesName && matchesCity && matchesVat;
   }
 
+  updateCustomer(customer: Customer): Observable<Customer>{
+    return this.http.put<Customer>('/api/customers/' + customer.id, customer);
+  }
+
+  getCustomer(id: number): Observable<Customer> {
+    return this.http.get<Customer>('api/customers/' + id);
+  }
 
 }
