@@ -3,12 +3,13 @@ import {Customer} from "../models/customer.model";
 import {Filter} from "../models/Filter.model";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  api: string = 'api/customers';
+  api: string = environment.apiUrl;
   http: HttpClient = inject(HttpClient);
 
   customers: Customer[] = [
