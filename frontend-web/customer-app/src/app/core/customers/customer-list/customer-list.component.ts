@@ -24,13 +24,15 @@ export class CustomerListComponent implements OnInit {
   customerService: CustomerService = inject(CustomerService);
 
   ngOnInit(): void {
-    this.customers = this.customerService.getCustomers();
+    this.fetchData();
     this.customers[1].isLoyal = true;
     this.filteredData = this.customers;
   }
 
   handleFilter(filter: Filter){
-    this.filteredData = this.customerService.filterCustomers(filter);
+    this.customerService.filterCustomers(filter).subscribe({
+      next: customers => this.filteredData = customers
+    });
   }
 
   private isCustomerMatchingFilter(customer: Customer, filter: Filter): boolean {
@@ -42,7 +44,19 @@ export class CustomerListComponent implements OnInit {
   }
 
   processAdd(customer: Customer){
-    this.customerService.addCustomer(customer);
-    this.filteredData = this.customerService.getCustomers();
+    this.customerService.addCustomer(customer).subscribe({
+      next: () => {
+        this.customerService.getCustomers().subscribe({
+          next: customers => this.filteredData = customers
+        });
+      }
+    });
+  }
+  fetchData(): void {
+    this.customerService.getCustomers().subscribe({
+      next: customers => {
+        this.filteredData = customers;
+      }
+    });
   }
 }
