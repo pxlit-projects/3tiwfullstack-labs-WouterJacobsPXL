@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {CustomerItemComponent} from "../customer-item/customer-item.component";
 import {FilterComponent} from "../filter/filter.component";
 import {Customer} from "../../../shared/models/customer.model";
 import {Filter} from "../../../shared/models/Filter.model";
 import {AddCustomerComponent} from "../add-customer/add-customer.component";
+import {CustomerService} from "../../../shared/services/customer.service";
 
 @Component({
   selector: 'app-customer-list',
@@ -20,20 +21,16 @@ import {AddCustomerComponent} from "../add-customer/add-customer.component";
 export class CustomerListComponent implements OnInit {
   customers!: Customer[];
   filteredData!: Customer[];
+  customerService: CustomerService = inject(CustomerService);
 
   ngOnInit(): void {
-    this.customers = [
-      new Customer('Dries Swinnen', 'dries@pxl.be', 'Pelt', 'mystreet', 'Belgium', 21),
-      new Customer('John Doe', 'john@doe.be', 'New York', '5th Avenue', 'USA', 6),
-      new Customer('Jane Doe', 'jane@doe.be', 'Los Angeles', 'Sunset Boulevard', 'USA', 6)
-    ];
-
+    this.customers = this.customerService.getCustomers();
     this.customers[1].isLoyal = true;
     this.filteredData = this.customers;
   }
 
   handleFilter(filter: Filter){
-    this.filteredData = this.customers.filter(customer => this.isCustomerMatchingFilter(customer, filter));
+    this.filteredData = this.customerService.filterCustomers(filter);
   }
 
   private isCustomerMatchingFilter(customer: Customer, filter: Filter): boolean {
@@ -45,7 +42,7 @@ export class CustomerListComponent implements OnInit {
   }
 
   processAdd(customer: Customer){
-    this.customers.push(customer);
-    this.filteredData = this.customers;
+    this.customerService.addCustomer(customer);
+    this.filteredData = this.customerService.getCustomers();
   }
 }

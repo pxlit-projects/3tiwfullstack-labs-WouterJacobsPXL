@@ -1,0 +1,13 @@
+.skills-form {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.skill-group {
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}

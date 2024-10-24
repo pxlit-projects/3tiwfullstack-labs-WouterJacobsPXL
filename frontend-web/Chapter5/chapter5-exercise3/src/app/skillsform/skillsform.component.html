@@ -1,0 +1,35 @@
+<div class="skills-form">
+  <form [formGroup]="skillsForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="skills">
+      <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i" class="skill-group">
+        <div class="form-group">
+          <label for="skillName">Skill Name</label>
+          <input type="text" formControlName="skillName" placeholder="Enter skill name" class="form-control"/>
+          <div *ngIf="skill.get('skillName').invalid && skill.get('skillName').touched" class="error">
+            Skill Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="experienceLevel">Experience Level</label>
+          <select formControlName="experienceLevel" class="form-control">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <!-- Button to remove this skill -->
+        <button type="button" (click)="removeSkill(i)" *ngIf="skills.length > 1" class="btn btn-danger">
+          Remove Skill
+        </button>
+      </div>
+    </div>
+
+    <!-- Button to add a new skill -->
+    <button type="button" (click)="addSkill()" class="btn btn-primary">Add Skill</button>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
