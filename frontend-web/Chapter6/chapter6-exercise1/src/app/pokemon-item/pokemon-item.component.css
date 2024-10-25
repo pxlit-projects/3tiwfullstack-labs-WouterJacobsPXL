@@ -1,57 +1,107 @@
 .pokemon-card {
+  position: relative;
+  width: 220px;
+  height: 280px;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card-content {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background: white;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  padding: 15px;
-  width: 200px;
-  height: 200px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
-  margin: 8px;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.pokemon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.pokemon-card:hover::before {
+  transform: translateY(0);
 }
 
 .pokemon-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-}
-
-.fire{
-  background: linear-gradient(145deg, #f8e9a1, #ff6f61);
-}
-
-.grass{
-  background: linear-gradient(145deg, #a8e6cf, #dcedc1);
-}
-
-.water{
-  background: linear-gradient(145deg, #a1c4fd, #c2e9fb);
-}
-
-.pokedex-info {
-  text-align: center;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  margin-bottom: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .pokemon-info {
+  text-align: center;
+  width: 100%;
+}
+
+.pokemon-number {
   font-size: 1.2em;
   font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.pokemon-name {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: white;
+  margin: 5px 0;
   text-transform: uppercase;
 }
 
 img {
-  width: 110px;
-  height: auto;
+  width: 140px;
+  height: 140px;
+  transition: transform 0.3s ease;
   image-rendering: pixelated;
-  transition: transform 0.2s ease;
 }
 
 .pokemon-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
+.type-badge {
+  padding: 5px 15px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.fire {
+  background: linear-gradient(45deg, #ff7b00, #ff006a);
+}
+
+.grass {
+  background: linear-gradient(45deg, #00c853, #64dd17);
+}
+
+.water {
+  background: linear-gradient(45deg, #0288d1, #26c6da);
+}
+
+.selected {
+  box-shadow: 0 0 0 3px #ffd700, 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.selected::after {
+  content: '★';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ffd700;
+  font-size: 1.5em;
+}

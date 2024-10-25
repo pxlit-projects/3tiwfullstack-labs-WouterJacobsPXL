@@ -1,8 +1,10 @@
-<div class="pokemon-card" [class]="pokemon.type" >
-  <div class="pokedex-info">
-    <p class="pokemon-info">{{pokemon.id}}. {{pokemon.name}}</p>
+<div class="pokemon-card" [class]="pokemon.type" [class.selected]="isSelected">
+  <div class="card-content">
+    <div class="pokemon-info">
+      <span class="pokemon-number">{{pokemon.id}}</span>
+      <h2 class="pokemon-name">{{pokemon.name}}</h2>
+    </div>
+    <img [src]="pokemon.icon" [alt]="pokemon.name">
+    <div class="type-badge">{{pokemon.type}}</div>
   </div>
-  <img [src]="pokemon.icon" alt="Pokemon image">
 </div>
-
-

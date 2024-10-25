@@ -1,8 +1,22 @@
-<h1>Pokedex</h1>
-<p>Geselecteerde pokemon: {{selectedPokemon?.name}}</p>
-<div class="pokemon-cards-container">
-@for(item of pokemons; track item.id){
-      <app-pokemon [pokemon]="item" (click)="selectPokemon(item)" [class]="{'isSelected': item.id === selectedPokemon?.id}"></app-pokemon>
+<div class="pokedex-container">
+  <header class="pokedex-header">
+    <h1>Pokedex</h1>
+    @if(selectedPokemon){
+      <p  class="selected-pokemon">
+        Selected Pokemon: {{selectedPokemon.name}}
+      </p>
     }
+
+  </header>
+
+  <div class="pokemon-grid">
+    @for(pokemon of pokemons; track pokemon.id) {
+      <app-pokemon
+        [pokemon]="pokemon"
+        [isSelected]="pokemon.id === selectedPokemon?.id"
+        (click)="selectPokemon(pokemon)">
+      </app-pokemon>
+    }
+  </div>
 </div>
 

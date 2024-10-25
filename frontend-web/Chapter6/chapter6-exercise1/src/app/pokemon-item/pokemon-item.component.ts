@@ -11,4 +11,5 @@ import {NgClass} from "@angular/common";
 })
 export class PokemonItemComponent {
   @Input() pokemon!: Pokemon;
+  @Input() isSelected: boolean = false;
 }
