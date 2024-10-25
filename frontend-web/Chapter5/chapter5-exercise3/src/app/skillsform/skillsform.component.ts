@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 
@@ -13,44 +13,61 @@ import {NgForOf, NgIf} from "@angular/common";
   templateUrl: './skillsform.component.html',
   styleUrl: './skillsform.component.css'
 })
-export class SkillsformComponent {
+export class SkillsFormComponent implements OnInit {
   skillsForm: FormGroup;
+  experienceLevels = ['Beginner', 'Intermediate', 'Advanced'];
 
   constructor(private fb: FormBuilder) {
     this.skillsForm = this.fb.group({
-      skills: this.fb.array([this.createSkillFormGroup()]) // Initialize with one skill group
+      skills: this.fb.array([])
     });
   }
 
-  // Getter to access the skills FormArray
+  ngOnInit(): void {
+    // Add one skill field by default
+    this.addSkill();
+  }
+
+  // Getter for easy access to the skills FormArray
   get skills(): FormArray {
     return this.skillsForm.get('skills') as FormArray;
   }
 
-  // Method to create a new skill FormGroup
+  // Create a new skill FormGroup
   createSkillFormGroup(): FormGroup {
     return this.fb.group({
-      skillName: ['', Validators.required], // Skill Name is required
-      experienceLevel: ['Beginner', Validators.required] // Default to Beginner
+      skillName: ['', Validators.required],
+      experienceLevel: ['Beginner', Validators.required]
     });
   }
 
-  // Method to add a new skill FormGroup to the FormArray
-  addSkill() {
+  // Add a new skill field
+  addSkill(): void {
     this.skills.push(this.createSkillFormGroup());
   }
 
-  // Method to remove a skill FormGroup from the FormArray
-  removeSkill(index: number) {
+  // Remove a skill field
+  removeSkill(index: number): void {
     this.skills.removeAt(index);
   }
 
-  // On form submission, log the list of skills
-  onSubmit() {
+  // Form submission handler
+  onSubmit(): void {
     if (this.skillsForm.valid) {
-      console.log(this.skillsForm.value.skills);
+      console.log('Submitted Skills:', this.skillsForm.value.skills);
     } else {
-      console.log("Form is invalid");
+      this.markFormGroupTouched(this.skillsForm);
     }
+  }
+
+  // Helper method to mark all controls as touched
+  private markFormGroupTouched(formGroup: FormGroup | FormArray): void {
+    Object.values(formGroup.controls).forEach(control => {
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupTouched(control);
+      } else {
+        control.markAsTouched();
+      }
+    });
   }
 }
